@@ -14,6 +14,7 @@ async function main() {
       city: 'کردستان',
       role: 'ADMIN',
       isActive: true,
+      password: 'admin123',
     },
   });
 
@@ -29,6 +30,7 @@ async function main() {
       city: 'دیواندره',
       role: 'REPRESENTATIVE',
       isActive: true,
+      password: 'rep123',
     },
   });
 

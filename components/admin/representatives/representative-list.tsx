@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Switch } from "@/components/ui/switch";
-import { Search, Edit, Trash2 } from "lucide-react";
+import { Search, Edit, Trash2, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -226,6 +226,14 @@ export function RepresentativeList() {
                 </div>
               </div>
               <div className="flex items-center justify-end gap-2 pt-2 border-t">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => router.push(`/admin/representatives/${rep.id}`)}
+                >
+                  <Eye className="h-4 w-4 ml-2" />
+                  مشاهده جزئیات
+                </Button>
                 <EditRepresentativeDialog representative={rep} />
                 <DeleteRepresentativeDialog representative={rep} />
               </div>
@@ -287,6 +295,14 @@ export function RepresentativeList() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => router.push(`/admin/representatives/${rep.id}`)}
+                        >
+                          <Eye className="h-4 w-4 ml-2" />
+                          مشاهده جزئیات
+                        </Button>
                         <EditRepresentativeDialog representative={rep} />
                         <DeleteRepresentativeDialog representative={rep} />
                       </div>

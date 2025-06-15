@@ -36,9 +36,20 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { firstName, lastName, nationalId, phoneNumber, city, educationCenter } = body;
+    const { 
+      firstName, 
+      lastName, 
+      fatherName,
+      nationalId, 
+      phoneNumber, 
+      city, 
+      address,
+      educationCenter,
+      isActive,
+      profileImage 
+    } = body;
 
-    if (!firstName || !lastName || !nationalId || !phoneNumber || !city || !educationCenter) {
+    if (!firstName || !lastName || !nationalId || !phoneNumber || !city) {
       return new NextResponse("Missing required fields", { status: 400 });
     }
 
@@ -58,12 +69,15 @@ export async function POST(req: Request) {
       data: {
         firstName,
         lastName,
+        fatherName,
         nationalId,
         phoneNumber,
         city,
+        address,
         educationCenter,
+        isActive: isActive ?? true,
+        profileImage,
         role: "REPRESENTATIVE",
-        isActive: true,
       },
     });
 
@@ -76,11 +90,20 @@ export async function POST(req: Request) {
 
 export async function PUT(request: Request) {
   try {
+    const session = await getServerSession(authOptions);
+    
+    if (!session || session.user.role !== "ADMIN") {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
     const { id, ...data } = await request.json();
 
     const updatedRepresentative = await prisma.user.update({
       where: { id },
-      data,
+      data: {
+        ...data,
+        role: "REPRESENTATIVE", // Ensure role stays as REPRESENTATIVE
+      },
     });
 
     return NextResponse.json(updatedRepresentative);

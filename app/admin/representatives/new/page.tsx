@@ -2,14 +2,13 @@ import { RepresentativeForm } from "@/components/admin/representatives/represent
 
 export default function NewRepresentativePage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium">ایجاد نماینده جدید</h3>
-        <p className="text-sm text-muted-foreground">
-          اطلاعات نماینده جدید را وارد کنید
-        </p>
+    <div className="flex-1 space-y-4 p-8 pt-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-3xl font-bold tracking-tight">افزودن نماینده جدید</h2>
       </div>
-      <RepresentativeForm />
+      <div className="grid gap-4">
+        <RepresentativeForm />
+      </div>
     </div>
   );
 } 
