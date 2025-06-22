@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(request: Request) {
+export async function GET(req: Request) {
   try {
     const products = await prisma.product.findMany({
       orderBy: {
@@ -11,31 +11,31 @@ export async function GET(request: Request) {
 
     return NextResponse.json(products);
   } catch (error) {
-    return NextResponse.json({ error: 'خطا در دریافت محصولات' }, { status: 500 });
+    console.error("[PRODUCTS_GET]", error);
+    return new NextResponse("Internal error", { status: 500 });
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const data = await request.json();
-    const { title, description, price, image, category, stock } = data;
+    const body = await req.json();
+    const { title, description, category, purchasePrice, salePrice, image } = body;
 
-    const newProduct = await prisma.product.create({
+    const product = await prisma.product.create({
       data: {
         title,
         description,
-        price: parseFloat(price),
+        category,
+        purchasePrice,
+        salePrice,
         image,
-        category: category || 'other',
-        stock: stock ? parseInt(stock) : 0,
-        createdAt: new Date(),
-      }
+      },
     });
 
-    return NextResponse.json(newProduct);
+    return NextResponse.json(product);
   } catch (error) {
-    console.error('Error creating product:', error);
-    return NextResponse.json({ error: 'خطا در ایجاد محصول' }, { status: 500 });
+    console.error("[PRODUCTS_POST]", error);
+    return new NextResponse("Internal error", { status: 500 });
   }
 }
 

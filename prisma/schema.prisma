@@ -39,8 +39,9 @@ model Product {
   title       String
   description String?
   image       String?
-  price       Float
-  category    String    @default("other")
+  category    String    @default("items")
+  purchasePrice Float
+  salePrice    Float
   stock       Int       @default(0)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
